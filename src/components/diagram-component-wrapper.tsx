@@ -4,11 +4,13 @@ import {
   Diagram,
   DiagramComponent,
   SnapConstraints,
+  StrokeStyle,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
 import AssemblyLibrary from './assembly-library';
 import { ExtendedTreeItemProps } from './types';
 import { DiagramTestData } from './diagram-data';
+import { useRef } from 'react';
 
 let diagramInstance: DiagramComponent;
 
@@ -103,6 +105,7 @@ const treeData: ExtendedTreeItemProps[] = [
 ];
 
 const DiagramComponentWrapper = () => {
+  const diagramInstanceRef = useRef(null);
   return (
     <Grid
       container
@@ -122,14 +125,54 @@ const DiagramComponentWrapper = () => {
         </Box>
       </Grid>
       <Grid item xs={8}>
-        <DiagramToolbar loadDiagram={loadDiagram} saveDiagram={saveDiagram} />
+        <DiagramToolbar
+          loadDiagram={loadDiagram}
+          saveDiagram={saveDiagram}
+          diagramInstanceRef={diagramInstanceRef}
+        />
         <DiagramComponent
           id="diagram"
-          ref={(diagram) => (diagramInstance = diagram)}
+          ref={(diagram) => {
+            diagramInstance = diagram;
+            diagramInstanceRef.current = diagram;
+          }}
           width={'100%'}
           height={'900px'}
           serializationSettings={{ preventDefaults: true }}
           snapSettings={{ constraints: SnapConstraints.ShowLines }}
+          click={(args) => {
+            if (args.actualObject != undefined) {
+              if (args.button == 'Left') {
+                // debugger;
+                const node = {
+                  id: 'node1',
+                  style: {
+                    fill: 'lightblue',
+                    strokeColor: 'white',
+                    opacity: 0.4,
+                    StrokeStyle: 'Dotted',
+                  },
+                  shape: {
+                    type: 'Basic',
+                    shape: 'Polygon',
+                    points: [],
+                  },
+                };
+                for (
+                  let i = 0;
+                  i < args.actualObject.segments.length - 1;
+                  i++
+                ) {
+                  node.shape.points.push(args.actualObject.segments[i].point);
+                }
+                node.shape.points.push(args.actualObject.targetPoint);
+                node.offsetX = args.actualObject.wrapper.offsetX;
+                node.offsetY = args.actualObject.wrapper.offsetY;
+                diagramInstance.remove(args.actualObject);
+                diagramInstance.add(node);
+              }
+            }
+          }}
           layout={
             {
               // //Configures  layout
