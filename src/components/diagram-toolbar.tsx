@@ -26,7 +26,12 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
         <Button color="inherit" onClick={saveDiagram}>
           Save
         </Button>
-        <Button color="inherit" onClick={() => {}}>
+        <Button
+          color="inherit"
+          onClick={() => {
+            diagramInstanceRef.current.clear();
+          }}
+        >
           CLEAR
         </Button>
         <IconButton color="inherit" aria-label="menu">
