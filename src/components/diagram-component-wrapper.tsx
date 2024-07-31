@@ -3,23 +3,25 @@ import {
   ConnectorModel,
   Diagram,
   DiagramComponent,
+  DiagramContextMenu,
+  Inject,
   SnapConstraints,
-  StrokeStyle,
+  Snapping,
+  UndoRedo,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
 import AssemblyLibrary from './assembly-library';
-import { ExtendedTreeItemProps } from './types';
 import { DiagramTestData } from './diagram-data';
 import { useRef } from 'react';
 
 let diagramInstance: DiagramComponent;
 
-const treeData: ExtendedTreeItemProps[] = [
+const treeData: any[] = [
   {
     id: '1',
     label: 'Project Construction Site Objects',
     children: [
-      { id: '11', label: 'Construction Area' },
+      { id: '11', label: 'Construction Area', disabled: true },
       { id: '12', label: 'Hazard Waste Disposal Area' },
       { id: '13', label: 'Parking Area' },
     ],
@@ -138,8 +140,34 @@ const DiagramComponentWrapper = () => {
           }}
           width={'100%'}
           height={'900px'}
+          rulerSettings={{
+            showRulers: true,
+            horizontalRuler: {
+              interval: 5,
+              segmentWidth: 100,
+              thickness: 25,
+              tickAlignment: 'LeftOrTop',
+            },
+            verticalRuler: {
+              interval: 5,
+              segmentWidth: 100,
+              thickness: 35,
+              tickAlignment: 'RightOrBottom',
+            },
+          }}
+          contextMenuSettings={{
+            show: true,
+            // Hides the default context menu items
+            showCustomMenuOnly: false,
+          }}
           serializationSettings={{ preventDefaults: true }}
-          snapSettings={{ constraints: SnapConstraints.ShowLines }}
+          snapSettings={{
+            snapObjectDistance: 5,
+            constraints:
+              SnapConstraints.SnapToObject |
+              SnapConstraints.SnapToLines |
+              SnapConstraints.ShowLines,
+          }}
           click={(args) => {
             if (args.actualObject != undefined) {
               if (args.button == 'Left') {
@@ -200,7 +228,7 @@ const DiagramComponentWrapper = () => {
           //     return setNodeTemplate(obj, diagram);
           //   }}
         >
-          {/* <Inject services={[DataBinding]} /> */}
+          <Inject services={[UndoRedo, Snapping, DiagramContextMenu]} />
         </DiagramComponent>
       </Grid>
       <Grid item xs={2}>

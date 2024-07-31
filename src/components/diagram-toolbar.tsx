@@ -1,5 +1,5 @@
 import { AppBar, Button, IconButton, Toolbar } from '@mui/material';
-import { ZoomIn, ZoomOut } from '@mui/icons-material';
+import { ZoomIn, ZoomOut, Undo, Redo } from '@mui/icons-material';
 import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
 
 const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
@@ -34,6 +34,24 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
         >
           CLEAR
         </Button>
+        <IconButton
+          color="inherit"
+          aria-label="menu"
+          onClick={() => {
+            diagramInstanceRef.current.undo();
+          }}
+        >
+          <Undo />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="menu"
+          onClick={() => {
+            diagramInstanceRef.current.redo();
+          }}
+        >
+          <Redo />
+        </IconButton>
         <IconButton color="inherit" aria-label="menu">
           <ZoomIn />
         </IconButton>
