@@ -1,3 +1,4 @@
+import { red } from '@mui/material/colors';
 import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
 import {
   ItemDirective,
@@ -41,6 +42,26 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
     };
     diagramInstanceRef.current.add(node);
     diagramInstanceRef.current.dataBind();
+  };
+
+  const cut = () => {
+    diagramInstanceRef.current.cut();
+  };
+
+  const copy = () => {
+    diagramInstanceRef.current.copy();
+  };
+
+  const paste = () => {
+    diagramInstanceRef.current.paste();
+  };
+
+  const undo = () => {
+    diagramInstanceRef.current.undo();
+  };
+
+  const redo = () => {
+    diagramInstanceRef.current.redo();
   };
 
   const zoomIn = () => {
@@ -112,6 +133,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
           click={drawPolyLine}
         />
         <ItemDirective text="ADD NODE" tooltipText="Add Node" click={addNode} />
+        <ItemDirective type="Separator" />
         <ItemDirective
           prefixIcon="e-icons e-zoom-in"
           tooltipText="Zoom In"
@@ -122,6 +144,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
           tooltipText="Zoom Out"
           click={zoomout}
         />
+
         <ItemDirective type="Separator" />
         <ItemDirective
           prefixIcon="e-icons e-mouse-pointer"
@@ -134,11 +157,41 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
           click={panTool}
         />
         <ItemDirective type="Separator" />
+
+        <ItemDirective
+          prefixIcon="e-icons e-cut"
+          tooltipText="Cut"
+          click={cut}
+        />
+        <ItemDirective
+          prefixIcon="e-icons e-copy"
+          tooltipText="Copy"
+          click={copy}
+        />
+        <ItemDirective
+          prefixIcon="e-icons e-paste"
+          tooltipText="Paste"
+          click={paste}
+        />
+        <ItemDirective type="Separator" />
+
+        <ItemDirective
+          prefixIcon="e-icons e-undo"
+          tooltipText="Undo"
+          click={undo}
+        />
+        <ItemDirective
+          prefixIcon="e-icons e-redo"
+          tooltipText="Redo"
+          click={redo}
+        />
         <ItemDirective
           prefixIcon="e-icons e-reset"
           tooltipText="Reset"
           click={reset}
         />
+
+        <ItemDirective type="Separator" />
         <ItemDirective
           prefixIcon="e-icons e-zoom-to-fit"
           tooltipText="Fit To Page"
