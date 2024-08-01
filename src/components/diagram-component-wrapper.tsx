@@ -172,12 +172,15 @@ const DiagramComponentWrapper = () => {
               SnapConstraints.ShowLines,
           }}
           selectedItems={{
-            constraints: SelectorConstraints.UserHandle,
+            constraints:
+              SelectorConstraints.ToolTip |
+              SelectorConstraints.ResizeAll |
+              SelectorConstraints.UserHandle,
             userHandles: handles,
           }}
           //set CustomTool
-          getCustomTool={(diagram: Diagram, action: string): ToolBase =>
-            getTool(diagram, action)
+          getCustomTool={(action: string): ToolBase =>
+            getTool(diagramInstance, action)
           }
           click={(args) => {
             if (args.actualObject != undefined) {

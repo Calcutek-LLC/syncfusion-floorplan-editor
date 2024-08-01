@@ -4,7 +4,6 @@ import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
 
 const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
   const drawPolyLine = () => {
-    console.log('Draw Polyline');
     const polyline = { id: 'connector1', type: 'Polyline' };
     diagramInstanceRef.current.drawingObject = polyline;
     diagramInstanceRef.current.tool = DiagramTools.DrawOnce;
