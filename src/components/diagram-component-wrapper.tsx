@@ -5,11 +5,15 @@ import {
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  NodeModel,
+  randomId,
   SelectorConstraints,
   SnapConstraints,
   Snapping,
   ToolBase,
   UndoRedo,
+  NodeConstraints,
+  DiagramShapeModel,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
 import AssemblyLibrary from './assembly-library';
@@ -164,14 +168,13 @@ const DiagramComponentWrapper = () => {
           }}
           contextMenuSettings={{
             show: true,
-            // // Hides the default context menu items
+            // Hides the default context menu items
             showCustomMenuOnly: false,
           }}
           serializationSettings={{ preventDefaults: true }}
           snapSettings={{
             snapObjectDistance: 5,
             constraints:
-              SnapConstraints.All |
               SnapConstraints.SnapToObject |
               SnapConstraints.SnapToLines |
               SnapConstraints.ShowLines,
@@ -187,20 +190,16 @@ const DiagramComponentWrapper = () => {
           getCustomTool={(action: string): ToolBase =>
             getTool(diagramInstance, action)
           }
-          created={() => {
-            diagramInstance.fitToPage({ mode: 'Width' });
-          }}
           click={(args) => {
             if (args.actualObject != undefined) {
               if (args.button == 'Left') {
                 // debugger;
-                const node = {
-                  id: 'node1',
+                let node: NodeModel = {
+                  id: 'node_' + randomId(),
                   style: {
                     fill: 'lightblue',
                     strokeColor: 'white',
                     opacity: 0.4,
-                    StrokeStyle: 'Dotted',
                   },
                   shape: {
                     type: 'Basic',
@@ -213,11 +212,16 @@ const DiagramComponentWrapper = () => {
                   i < args.actualObject.segments.length - 1;
                   i++
                 ) {
-                  node.shape.points.push(args.actualObject.segments[i].point);
+                  (node.shape as DiagramShapeModel).points.push(
+                    args.actualObject.segments[i].point
+                  );
                 }
-                node.shape.points.push(args.actualObject.targetPoint);
+                (node.shape as DiagramShapeModel).points.push(
+                  args.actualObject.targetPoint
+                );
                 node.offsetX = args.actualObject.wrapper.offsetX;
                 node.offsetY = args.actualObject.wrapper.offsetY;
+                node.constraints = NodeConstraints.None;
                 diagramInstance.remove(args.actualObject);
                 diagramInstance.add(node);
               }
@@ -234,7 +238,7 @@ const DiagramComponentWrapper = () => {
           }
           //   selectionChange={(args: ISelectionChangeEventArgs) => {}}
           //   dataSourceSettings={{}}
-          getNodeDefaults={(obj: Node, diagram: Diagram) => {
+          getNodeDefaults={(obj: NodeModel, diagram: Diagram) => {
             //Sets the default values of Node
             return obj;
           }}

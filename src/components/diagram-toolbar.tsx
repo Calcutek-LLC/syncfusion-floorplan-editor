@@ -1,4 +1,4 @@
-import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
+import { DiagramTools, NodeConstraints } from '@syncfusion/ej2-react-diagrams';
 import {
   ItemDirective,
   ItemsDirective,
@@ -20,6 +20,11 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
       height: 100,
       offsetX: 100,
       offsetY: 100,
+      minWidth: 50,
+      maxWidth: 200,
+      minHeight: 50,
+      maxHeight: 200,
+      NodeConstraints: NodeConstraints.None & ~NodeConstraints.Drag,
       style: {
         fill: '#6BA5D7',
         strokeColor: 'white',

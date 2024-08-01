@@ -3,7 +3,7 @@ import {
   ToolBase,
   UserHandleModel,
 } from '@syncfusion/ej2-react-diagrams';
-import { CloneTool, DeleteTool } from './clone-tool';
+import { CloneTool } from './clone-tool';
 
 export const handles: UserHandleModel[] = [
   {
