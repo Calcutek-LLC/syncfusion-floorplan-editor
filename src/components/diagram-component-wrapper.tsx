@@ -142,7 +142,7 @@ const DiagramComponentWrapper = () => {
             diagramInstanceRef.current = diagram;
           }}
           width={'100%'}
-          height={'900px'}
+          height={'750px'}
           rulerSettings={{
             showRulers: true,
             horizontalRuler: {
@@ -160,7 +160,7 @@ const DiagramComponentWrapper = () => {
           }}
           scrollSettings={{
             //Sets the scroll limit
-            scrollLimit: 'Infinity',
+            scrollLimit: 'Limited',
           }}
           contextMenuSettings={{
             show: true,

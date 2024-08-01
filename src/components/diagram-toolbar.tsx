@@ -1,4 +1,3 @@
-import { red } from '@mui/material/colors';
 import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
 import {
   ItemDirective,
@@ -109,6 +108,51 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
     }
   };
 
+  const alignLeft = () => {
+    diagramInstanceRef.current.align('Left');
+  };
+
+  const alignCenter = () => {
+    diagramInstanceRef.current.align('Center');
+  };
+
+  const alignRight = () => {
+    diagramInstanceRef.current.align('Right');
+  };
+
+  const alignTop = () => {
+    diagramInstanceRef.current.align('Top');
+  };
+
+  const alignMiddle = () => {
+    diagramInstanceRef.current.align('Middle');
+  };
+
+  const alignBottom = () => {
+    diagramInstanceRef.current.align('Bottom');
+  };
+
+  const sameWidth = () => {
+    diagramInstanceRef.current.sameSize(
+      'Width',
+      diagramInstanceRef.current.selectedItems.nodes
+    );
+  };
+
+  const sameHeight = () => {
+    diagramInstanceRef.current.sameSize(
+      'Height',
+      diagramInstanceRef.current.selectedItems.nodes
+    );
+  };
+
+  const sameSize = () => {
+    diagramInstanceRef.current.sameSize(
+      'Size',
+      diagramInstanceRef.current.selectedItems.nodes
+    );
+  };
+
   return (
     <ToolbarComponent
       // ref={(toolbar) => (toolbarEditor = toolbar)}
@@ -209,6 +253,60 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
           tooltipText="Bring Into Center"
           click={bringIntoCenter}
           disabled={true}
+        />
+
+        <ItemDirective type="Separator" />
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-left-1"
+          tooltipText="Align Left"
+          click={alignLeft}
+        />
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-center-1"
+          tooltipText="Align Center"
+          click={alignCenter}
+        />
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-right-1"
+          tooltipText="Align Right"
+          click={alignRight}
+        />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-top-1"
+          tooltipText="Align Top"
+          click={alignTop}
+        />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-middle-1"
+          tooltipText="Align Middle"
+          click={alignMiddle}
+        />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-align-bottom-1"
+          tooltipText="Align Bottom"
+          click={alignBottom}
+        />
+        <ItemDirective type="Separator" />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-same-width"
+          tooltipText="Same Width"
+          click={sameWidth}
+        />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-same-height"
+          tooltipText="Same Height"
+          click={sameHeight}
+        />
+
+        <ItemDirective
+          prefixIcon="sf-diagram-icon-same-size"
+          tooltipText="Same Size"
+          click={sameSize}
         />
       </ItemsDirective>
     </ToolbarComponent>
