@@ -5,16 +5,19 @@ import {
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  SelectorConstraints,
   SnapConstraints,
   Snapping,
+  ToolBase,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
 import AssemblyLibrary from './assembly-library';
 import { DiagramTestData } from './diagram-data';
 import { useRef } from 'react';
+import { getTool, handles } from './user-handles';
 
-let diagramInstance: DiagramComponent;
+export let diagramInstance: DiagramComponent;
 
 const treeData: any[] = [
   {
@@ -168,6 +171,14 @@ const DiagramComponentWrapper = () => {
               SnapConstraints.SnapToLines |
               SnapConstraints.ShowLines,
           }}
+          selectedItems={{
+            constraints: SelectorConstraints.UserHandle,
+            userHandles: handles,
+          }}
+          //set CustomTool
+          getCustomTool={(diagram: Diagram, action: string): ToolBase =>
+            getTool(diagram, action)
+          }
           click={(args) => {
             if (args.actualObject != undefined) {
               if (args.button == 'Left') {
