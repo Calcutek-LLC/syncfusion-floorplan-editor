@@ -158,15 +158,20 @@ const DiagramComponentWrapper = () => {
               tickAlignment: 'RightOrBottom',
             },
           }}
+          scrollSettings={{
+            //Sets the scroll limit
+            scrollLimit: 'Infinity',
+          }}
           contextMenuSettings={{
             show: true,
-            // Hides the default context menu items
+            // // Hides the default context menu items
             showCustomMenuOnly: false,
           }}
           serializationSettings={{ preventDefaults: true }}
           snapSettings={{
             snapObjectDistance: 5,
             constraints:
+              SnapConstraints.All |
               SnapConstraints.SnapToObject |
               SnapConstraints.SnapToLines |
               SnapConstraints.ShowLines,
@@ -182,6 +187,9 @@ const DiagramComponentWrapper = () => {
           getCustomTool={(action: string): ToolBase =>
             getTool(diagramInstance, action)
           }
+          created={() => {
+            diagramInstance.fitToPage({ mode: 'Width' });
+          }}
           click={(args) => {
             if (args.actualObject != undefined) {
               if (args.button == 'Left') {
