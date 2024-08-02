@@ -1,4 +1,4 @@
-import { DiagramTools, NodeConstraints } from '@syncfusion/ej2-react-diagrams';
+import { DiagramTools } from '@syncfusion/ej2-react-diagrams';
 import {
   ItemDirective,
   ItemsDirective,
@@ -10,41 +10,6 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
     const polyline = { id: 'connector1', type: 'Polyline' };
     diagramInstanceRef.current.drawingObject = polyline;
     diagramInstanceRef.current.tool = DiagramTools.DrawOnce;
-    diagramInstanceRef.current.dataBind();
-  };
-
-  const addNode = () => {
-    const node = {
-      id: 'node1',
-      width: 100,
-      height: 100,
-      offsetX: 100,
-      offsetY: 100,
-      minWidth: 50,
-      maxWidth: 200,
-      minHeight: 50,
-      maxHeight: 200,
-      constraints: NodeConstraints.None,
-      style: {
-        fill: '#6BA5D7',
-        strokeColor: 'white',
-        strokeWidth: 1,
-      },
-      annotations: [
-        {
-          id: 'label1',
-          content: 'Rectangle1',
-          offset: {
-            x: 0.5,
-            y: 0.5,
-          },
-          style: {
-            color: 'white',
-          },
-        },
-      ],
-    };
-    diagramInstanceRef.current.add(node);
     diagramInstanceRef.current.dataBind();
   };
 
@@ -69,12 +34,12 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
   };
 
   const zoomIn = () => {
-    let zoomin: any = { type: 'ZoomIn', zoomFactor: 0.2 };
+    const zoomin = { type: 'ZoomIn', zoomFactor: 0.2 };
     diagramInstanceRef.current.zoomTo(zoomin);
   };
 
   const zoomout = () => {
-    let zoomout: any = { type: 'ZoomOut', zoomFactor: 0.2 };
+    const zoomout = { type: 'ZoomOut', zoomFactor: 0.2 };
     diagramInstanceRef.current.zoomTo(zoomout);
   };
 
@@ -99,7 +64,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
 
   const bringIntoView = () => {
     if (diagramInstanceRef.current.selectedItems.nodes.length > 0) {
-      let bound: any =
+      const bound =
         diagramInstanceRef.current.selectedItems.nodes[0].wrapper.bounds;
       diagramInstanceRef.current.bringIntoView(bound);
     }
@@ -107,7 +72,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
 
   const bringIntoCenter = () => {
     if (diagramInstanceRef.current.selectedItems.nodes.length > 0) {
-      let bound: any =
+      const bound =
         diagramInstanceRef.current.selectedItems.nodes[0].wrapper.bounds;
       diagramInstanceRef.current.bringToCenter(bound);
     }
@@ -181,7 +146,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
           tooltipText="Poly Line"
           click={drawPolyLine}
         />
-        <ItemDirective text="ADD NODE" tooltipText="Add Node" click={addNode} />
+
         <ItemDirective type="Separator" />
         <ItemDirective
           prefixIcon="e-icons e-zoom-in"
