@@ -94,3 +94,291 @@ export const DiagramTestData = {
   ],
   selectedItems: { width: 0, height: 0 },
 };
+
+export const assemblies: any[] = [
+  {
+    id: '1',
+    label: 'Project Construction Site Objects',
+    hasChild: true,
+    children: [
+      { id: '11', parentId: '1', label: 'Construction Area', hasChild: false },
+      {
+        id: '12',
+        parentId: '1',
+        label: 'Hazard Waste Disposal Area',
+        hasChild: false,
+      },
+      { id: '13', parentId: '1', label: 'Parking Area', hasChild: false },
+    ],
+  },
+  {
+    id: '2',
+    label: 'Building Zone Objects',
+    nodeType: 'folder',
+    hasChild: true,
+    children: [
+      {
+        id: '21',
+        parentId: '2',
+        label: 'Building Structure',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          {
+            id: '211',
+            parentId: '21',
+            label: 'Building Footprint',
+            hasChild: false,
+          },
+        ],
+      },
+      {
+        id: '22',
+        parentId: '2',
+        label: 'Floor',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          { id: '221', parentId: '22', label: 'Floor 1', hasChild: false },
+          { id: '222', parentId: '22', label: 'Floor 2', hasChild: false },
+          { id: '223', parentId: '22', label: 'Floor 3', hasChild: false },
+        ],
+      },
+      {
+        id: '23',
+        parentId: '2',
+        label: 'Roof',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          { id: '231', parentId: '23', label: 'Roof Area', hasChild: false },
+        ],
+      },
+      {
+        id: '24',
+        parentId: '2',
+        label: 'Elevators',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          {
+            id: '241',
+            parentId: '24',
+            label: 'Elevator 1 (Visitor Passenger)',
+            hasChild: false,
+          },
+          {
+            id: '242',
+            parentId: '24',
+            label: 'Elevator 2 (Patient)',
+            hasChild: false,
+          },
+          {
+            id: '243',
+            parentId: '24',
+            label: 'Elevator 3 (Cargo)',
+            hasChild: false,
+          },
+        ],
+      },
+      {
+        id: '25',
+        parentId: '2',
+        label: 'Escalators',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          { id: '251', parentId: '25', label: 'Escalator 1', hasChild: false },
+          { id: '252', parentId: '25', label: 'Escalator 2', hasChild: false },
+        ],
+      },
+      {
+        id: '26',
+        parentId: '2',
+        label: 'Exit Areas',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          { id: '261', parentId: '26', label: 'Exit Area 1', hasChild: false },
+          { id: '262', parentId: '26', label: 'Exit Area 2', hasChild: false },
+        ],
+      },
+      {
+        id: '27',
+        parentId: '2',
+        label: 'Mechanical Rooms',
+        nodeType: 'folder',
+        hasChild: true,
+        children: [
+          {
+            id: '271',
+            parentId: '27',
+            label: 'Mechanical Room 1',
+            hasChild: false,
+          },
+          {
+            id: '272',
+            parentId: '27',
+            label: 'Mechanical Room 2',
+            hasChild: false,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '3',
+    label: 'Hospital Departments',
+    nodeType: 'folder',
+    hasChild: true,
+    children: [
+      {
+        id: '31',
+        parentId: '3',
+        label: 'ICU Department',
+        children: [
+          {
+            id: '311',
+            parentId: '31',
+            label: 'ICU Patient Room Object',
+            hasChild: false,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export const assembliesV2: any[] = [
+  {
+    id: '1',
+    label: 'Project Construction Site Objects',
+    hasChild: true,
+  },
+  { id: '11', parentId: '1', label: 'Construction Area', hasChild: false },
+  {
+    id: '12',
+    parentId: '1',
+    label: 'Hazard Waste Disposal Area',
+    hasChild: false,
+  },
+  { id: '13', parentId: '1', label: 'Parking Area', hasChild: false },
+  {
+    id: '211',
+    parentId: '21',
+    label: 'Building Footprint',
+    hasChild: false,
+  },
+  {
+    id: '2',
+    label: 'Building Zone Objects',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  {
+    id: '21',
+    parentId: '2',
+    label: 'Building Structure',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  {
+    id: '22',
+    parentId: '2',
+    label: 'Floor',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  { id: '221', parentId: '22', label: 'Floor 1', hasChild: false },
+  { id: '222', parentId: '22', label: 'Floor 2', hasChild: false },
+  { id: '223', parentId: '22', label: 'Floor 3', hasChild: false },
+  {
+    id: '23',
+    parentId: '2',
+    label: 'Roof',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  { id: '231', parentId: '23', label: 'Roof Area', hasChild: false },
+  {
+    id: '24',
+    parentId: '2',
+    label: 'Elevators',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  {
+    id: '241',
+    parentId: '24',
+    label: 'Elevator 1 (Visitor Passenger)',
+    hasChild: false,
+  },
+  {
+    id: '242',
+    parentId: '24',
+    label: 'Elevator 2 (Patient)',
+    hasChild: false,
+  },
+  {
+    id: '243',
+    parentId: '24',
+    label: 'Elevator 3 (Cargo)',
+    hasChild: false,
+  },
+  {
+    id: '25',
+    parentId: '2',
+    label: 'Escalators',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  { id: '251', parentId: '25', label: 'Escalator 1', hasChild: false },
+  { id: '252', parentId: '25', label: 'Escalator 2', hasChild: false },
+  {
+    id: '26',
+    parentId: '2',
+    label: 'Exit Areas',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  { id: '261', parentId: '26', label: 'Exit Area 1', hasChild: false },
+  { id: '262', parentId: '26', label: 'Exit Area 2', hasChild: false },
+  {
+    id: '27',
+    parentId: '2',
+    label: 'Mechanical Rooms',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  {
+    id: '271',
+    parentId: '27',
+    label: 'Mechanical Room 1',
+    hasChild: false,
+  },
+  {
+    id: '272',
+    parentId: '27',
+    label: 'Mechanical Room 2',
+    hasChild: false,
+  },
+  {
+    id: '3',
+    label: 'Hospital Departments',
+    nodeType: 'folder',
+    hasChild: true,
+  },
+  {
+    id: '31',
+    parentId: '3',
+    label: 'ICU Department',
+    children: [
+      {
+        id: '311',
+        parentId: '31',
+        label: 'ICU Patient Room Object',
+        hasChild: false,
+      },
+    ],
+  },
+];

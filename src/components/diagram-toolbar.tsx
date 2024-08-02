@@ -24,7 +24,7 @@ const DiagramToolbar = ({ diagramInstanceRef, loadDiagram, saveDiagram }) => {
       maxWidth: 200,
       minHeight: 50,
       maxHeight: 200,
-      NodeConstraints: NodeConstraints.None & ~NodeConstraints.Drag,
+      constraints: NodeConstraints.None,
       style: {
         fill: '#6BA5D7',
         strokeColor: 'white',

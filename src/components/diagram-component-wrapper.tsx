@@ -16,102 +16,12 @@ import {
   DiagramShapeModel,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
-import AssemblyLibrary from './assembly-library';
-import { DiagramTestData } from './diagram-data';
+import { assembliesV2, DiagramTestData } from './diagram-data';
 import { useRef } from 'react';
 import { getTool, handles } from './user-handles';
+import AssemblyLibraryV2 from './assembly-library-v2';
 
 export let diagramInstance: DiagramComponent;
-
-const treeData: any[] = [
-  {
-    id: '1',
-    label: 'Project Construction Site Objects',
-    children: [
-      { id: '11', label: 'Construction Area', disabled: true },
-      { id: '12', label: 'Hazard Waste Disposal Area' },
-      { id: '13', label: 'Parking Area' },
-    ],
-  },
-  {
-    id: '2',
-    label: 'Building Zone Objects',
-    nodeType: 'folder',
-    children: [
-      {
-        id: '21',
-        label: 'Building Structure',
-        nodeType: 'folder',
-        children: [{ id: '211', label: 'Building Footprint' }],
-      },
-      {
-        id: '22',
-        label: 'Floor',
-        nodeType: 'folder',
-        children: [
-          { id: '221', label: 'Floor 1' },
-          { id: '222', label: 'Floor 2' },
-          { id: '223', label: 'Floor 3' },
-        ],
-      },
-      {
-        id: '23',
-        label: 'Roof',
-        nodeType: 'folder',
-        children: [{ id: '231', label: 'Roof Area' }],
-      },
-      {
-        id: '24',
-        label: 'Elevators',
-        nodeType: 'folder',
-        children: [
-          { id: '241', label: 'Elevator 1 (Visitor Passenger)' },
-          { id: '242', label: 'Elevator 2 (Patient)' },
-          { id: '243', label: 'Elevator 3 (Cargo)' },
-        ],
-      },
-      {
-        id: '25',
-        label: 'Escalators',
-        nodeType: 'folder',
-        children: [
-          { id: '251', label: 'Escalator 1' },
-          { id: '252', label: 'Escalator 2' },
-        ],
-      },
-      {
-        id: '26',
-        label: 'Exit Areas',
-        nodeType: 'folder',
-        children: [
-          { id: '261', label: 'Exit Area 1' },
-          { id: '262', label: 'Exit Area 2' },
-        ],
-      },
-      {
-        id: '27',
-        label: 'Mechanical Rooms',
-        nodeType: 'folder',
-        children: [
-          { id: '271', label: 'Mechanical Room 1' },
-          { id: '272', label: 'Mechanical Room 2' },
-        ],
-      },
-    ],
-  },
-  {
-    id: '3',
-    label: 'Hospital Departments',
-    nodeType: 'folder',
-    children: [
-      {
-        id: '31',
-        label: 'ICU Department',
-        children: [{ id: '311', label: 'ICU Patient Room Object' }],
-      },
-    ],
-  },
-];
 
 const DiagramComponentWrapper = () => {
   const diagramInstanceRef = useRef(null);
@@ -129,7 +39,8 @@ const DiagramComponentWrapper = () => {
         {/* Sidebar content goes here */}
         <Box sx={{ minHeight: 352, minWidth: 250, height: 'max-content' }}>
           <Stack>
-            <AssemblyLibrary treeData={treeData} />
+            <AssemblyLibraryV2 treeData={assembliesV2} />
+            {/* <AssemblyLibrary treeData={treeData} /> */}
           </Stack>
         </Box>
       </Grid>
