@@ -5,3 +5,21 @@ export type ExtendedTreeItemProps = {
   label: string;
   children?: ExtendedTreeItemProps[];
 };
+
+export type AssemblyData = {
+  id: string;
+  parentId?: string;
+  nodeType: string;
+  title: string;
+  hasChild?: boolean;
+  width?: number;
+  height?: number;
+  minWidth?: number;
+  maxWidth?: number;
+  minHeight?: number;
+  maxHeight?: number;
+  fillColor?: string;
+  borderColor?: string;
+  borderWidth?: number;
+  borderStyle?: string;
+};
