@@ -1,4 +1,4 @@
-import { Box, Grid, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
 import {
   ConnectorModel,
   Diagram,
@@ -14,26 +14,13 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
-import {
-  getAssemblyData,
-  DiagramTestData,
-  getAllAssemblies,
-} from './diagram-data';
-import { useRef } from 'react';
+import { getAssemblyData } from './diagram-data';
+import { forwardRef, useImperativeHandle } from 'react';
 import { getTool, handles } from './user-handles';
-import AssemblyLibraryV2 from './assembly-library-v2';
 import './diagram-component-wrapper.css';
 import { AssemblyData } from './types';
 
-export let diagramInstance: DiagramComponent;
-
-const loadDiagram = () => {
-  diagramInstance.loadDiagram(JSON.stringify(DiagramTestData));
-};
-const saveDiagram = () => {
-  const data = diagramInstance.saveDiagram();
-  console.log(data);
-};
+let diagramInstance: DiagramComponent;
 
 const assemblyNodeTemplate = (props) => {
   console.log(props);
@@ -88,52 +75,45 @@ const getNewAssemblyNodeInstance = (id: string): any => {
   return node;
 };
 
-const addNewAssemblyNodeInstance = (id: string) => {
-  const node = getNewAssemblyNodeInstance(id);
-  if (node === null) return;
-  diagramInstance.add(node);
-  diagramInstance.dataBind();
+type DiagramComponentWrapperProps = {
+  loadDiagram: () => void;
+  saveDiagram: () => void;
 };
 
-const treeData = getAllAssemblies();
-const DiagramComponentWrapper = () => {
-  const diagramInstanceRef = useRef(null);
-  // React.useEffect(() => {
-  //   diagramInstance.fitToPage();
-  // }, []);
-  return (
-    <Grid
-      container
-      spacing={2}
-      sx={{
-        mt: 10,
-        height: '100vh',
-        width: '100vw',
-      }}
-    >
-      <Grid item xs={2}>
-        {/* Sidebar content goes here */}
-        <Box sx={{ minHeight: 352, minWidth: 250, height: 'max-content' }}>
-          <Stack>
-            <AssemblyLibraryV2
-              diagramInstanceRef={diagramInstanceRef}
-              treeData={treeData}
-              addNewAssemblyNodeInstance={addNewAssemblyNodeInstance}
-            />
-          </Stack>
-        </Box>
-      </Grid>
-      <Grid item xs={8}>
+const DiagramComponentWrapper = forwardRef(
+  (props: DiagramComponentWrapperProps, ref) => {
+    // React.useEffect(() => {
+    //   diagramInstance.fitToPage();
+    // }, []);
+
+    useImperativeHandle(ref, () => ({
+      loadDiagramEx(data) {
+        diagramInstance.loadDiagram(data);
+      },
+
+      saveDiagramEx() {
+        return diagramInstance.saveDiagram();
+      },
+
+      addNewAssemblyNodeInstance(id: string) {
+        const node = getNewAssemblyNodeInstance(id);
+        if (node === null) return;
+        diagramInstance.add(node);
+        diagramInstance.dataBind();
+      },
+    }));
+
+    return (
+      <Grid>
         <DiagramToolbar
-          loadDiagram={loadDiagram}
-          saveDiagram={saveDiagram}
-          diagramInstanceRef={diagramInstanceRef}
+          loadDiagram={props.loadDiagram}
+          saveDiagram={props.saveDiagram}
+          diagramInstanceRef={diagramInstance}
         />
         <DiagramComponent
           id="diagram"
           ref={(diagram) => {
             diagramInstance = diagram;
-            diagramInstanceRef.current = diagram;
           }}
           nodeTemplate={assemblyNodeTemplate}
           width={'100%'}
@@ -253,11 +233,8 @@ const DiagramComponentWrapper = () => {
           <Inject services={[UndoRedo, Snapping, DiagramContextMenu]} />
         </DiagramComponent>
       </Grid>
-      <Grid item xs={2}>
-        {/* Sidebar content goes here */}
-      </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+);
 
 export default DiagramComponentWrapper;

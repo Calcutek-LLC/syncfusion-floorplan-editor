@@ -1,12 +1,7 @@
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
 
 let treeObj: TreeViewComponent;
-
-const AssemblyLibraryV2 = ({
-  diagramInstanceRef,
-  treeData,
-  addNewAssemblyNodeInstance,
-}) => {
+const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
   const fields = {
     dataSource: treeData,
     id: 'id',
@@ -19,7 +14,9 @@ const AssemblyLibraryV2 = ({
     if (treeObj.selectedNodes.length > 0) {
       const assemblyTreeNodeId = treeObj.selectedNodes[0];
       console.log(assemblyTreeNodeId);
-      addNewAssemblyNodeInstance(assemblyTreeNodeId);
+      diagramWrapperInstanceRef.current.addNewAssemblyNodeInstance(
+        assemblyTreeNodeId
+      );
     }
   };
 
