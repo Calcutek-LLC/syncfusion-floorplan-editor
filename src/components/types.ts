@@ -19,6 +19,7 @@ export type AssemblyData = {
   minHeight?: number;
   maxHeight?: number;
   fillColor?: string;
+  fillStyle?: string;
   borderColor?: string;
   borderWidth?: number;
   borderStyle?: string;

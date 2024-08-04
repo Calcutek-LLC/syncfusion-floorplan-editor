@@ -39,7 +39,12 @@ const assemblyNodeTemplate = (props) => {
   console.log(props);
   const assemblyData = props.data as AssemblyData;
   const border = `${assemblyData.borderColor} ${assemblyData.borderWidth}px ${assemblyData.borderStyle}`;
-  return <div style={{ border: border }} className="rectangle"></div>;
+  return (
+    <div
+      style={{ border: border, backgroundColor: assemblyData.fillColor }}
+      className="rectangle"
+    ></div>
+  );
 };
 
 const getNewAssemblyNodeInstance = (id: string): any => {
