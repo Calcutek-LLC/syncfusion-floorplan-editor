@@ -13,11 +13,7 @@ registerLicense(
 );
 
 function App() {
-  return (
-    <>
-      <ProjectDrawing />
-    </>
-  );
+  return <ProjectDrawing />;
 }
 
 export default App;

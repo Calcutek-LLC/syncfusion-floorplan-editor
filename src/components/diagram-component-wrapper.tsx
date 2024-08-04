@@ -14,8 +14,8 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams';
 import DiagramToolbar from './diagram-toolbar';
-import { getAssemblyData } from './diagram-data';
-import { forwardRef, useImperativeHandle } from 'react';
+import { getAssemblyData } from '../diagram-data';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { getTool, handles } from './user-handles';
 import './diagram-component-wrapper.css';
 import { AssemblyData } from './types';
@@ -82,6 +82,7 @@ type DiagramComponentWrapperProps = {
 
 const DiagramComponentWrapper = forwardRef(
   (props: DiagramComponentWrapperProps, ref) => {
+    const diagramInstanceRef = useRef(null);
     // React.useEffect(() => {
     //   diagramInstance.fitToPage();
     // }, []);
@@ -108,12 +109,13 @@ const DiagramComponentWrapper = forwardRef(
         <DiagramToolbar
           loadDiagram={props.loadDiagram}
           saveDiagram={props.saveDiagram}
-          diagramInstanceRef={diagramInstance}
+          diagramInstanceRef={diagramInstanceRef}
         />
         <DiagramComponent
           id="diagram"
           ref={(diagram) => {
             diagramInstance = diagram;
+            diagramInstanceRef.current = diagram;
           }}
           nodeTemplate={assemblyNodeTemplate}
           width={'100%'}
@@ -121,13 +123,13 @@ const DiagramComponentWrapper = forwardRef(
           rulerSettings={{
             showRulers: true,
             horizontalRuler: {
-              interval: 5,
+              interval: 10,
               segmentWidth: 100,
-              thickness: 25,
+              thickness: 35,
               tickAlignment: 'LeftOrTop',
             },
             verticalRuler: {
-              interval: 5,
+              interval: 10,
               segmentWidth: 100,
               thickness: 35,
               tickAlignment: 'RightOrBottom',
@@ -135,7 +137,7 @@ const DiagramComponentWrapper = forwardRef(
           }}
           scrollSettings={{
             //Sets the scroll limit
-            scrollLimit: 'Limited',
+            scrollLimit: 'Diagram',
           }}
           contextMenuSettings={{
             show: true,
