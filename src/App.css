@@ -4,10 +4,20 @@
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
-@import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-react-grids/styles/material.css';
 
 .e-diagram-first-selection-indicator {
   stroke-width: 5px;
   stroke: red;
   stroke-dasharray: 1, 1;
+}
+
+#treeview.e-treeview .e-list-icon {
+  background-repeat: no-repeat;
+  background-image: url(src/images/icons/file_icons.png);
+  height: 20px;
+}
+
+#treeview.e-treeview .e-list-icon.folder {
+  background-position: -10px -552px;
 }

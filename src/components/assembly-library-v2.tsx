@@ -8,6 +8,7 @@ const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
     text: 'title',
     parentID: 'parentId',
     hasChildren: 'hasChild',
+    iconCss: 'nodeType',
   };
 
   const addNode = () => {
@@ -29,6 +30,7 @@ const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
   return (
     <TreeViewComponent
       fields={fields}
+      id="treeview"
       ref={(treeview) => {
         treeObj = treeview;
       }}
