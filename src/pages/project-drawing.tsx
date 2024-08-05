@@ -12,7 +12,9 @@ import NodePropertyEditor from "../components/node-property-editor";
 
 const ProjectDrawing = () => {
   const diagramWrapperInstanceRef = useRef(null);
-  const splitterInstance = useRef<SplitterComponent>(null);
+  const nodePropertyEditornstanceRef = useRef(null);
+  const splitterInstanceRef = useRef<SplitterComponent>(null);
+
   const treeData = getAllAssemblies();
 
   const loadDiagram = () => {
@@ -28,7 +30,7 @@ const ProjectDrawing = () => {
 
   const assemblyLibraryElement = () => {
     return (
-      <Box sx={{ marginTop: "10px" }}>
+      <Box sx={{ margin: "12px" }}>
         <AssemblyLibraryV2
           diagramWrapperInstanceRef={diagramWrapperInstanceRef}
           treeData={treeData}
@@ -39,9 +41,17 @@ const ProjectDrawing = () => {
 
   const nodePropertyEditorElement = () => {
     return (
-      <Box sx={{ marginTop: "10px" }}>
+      <Box sx={{ paddingRight: "20px" }}>
         <NodePropertyEditor
+          ref={(propertyEditor) => {
+            nodePropertyEditornstanceRef.current = propertyEditor;
+          }}
           diagramWrapperInstanceRef={diagramWrapperInstanceRef}
+          onPropertyUpdate={(updatedData) => {
+            diagramWrapperInstanceRef.current.onNodePropertyUpdated(
+              updatedData
+            );
+          }}
         />
       </Box>
     );
@@ -51,10 +61,13 @@ const ProjectDrawing = () => {
     return (
       <Grid>
         <DiagramComponentWrapper
-          loadDiagram={loadDiagram}
-          saveDiagram={saveDiagram}
           ref={(diagram) => {
             diagramWrapperInstanceRef.current = diagram;
+          }}
+          loadDiagram={loadDiagram}
+          saveDiagram={saveDiagram}
+          handleDiagramSelectedItemsChanged={(data) => {
+            nodePropertyEditornstanceRef.current.loadSelectedItems(data);
           }}
         />
       </Grid>
@@ -70,7 +83,7 @@ const ProjectDrawing = () => {
         width: "100vw",
       }}
     >
-      <SplitterComponent height="100%" width="100%" ref={splitterInstance}>
+      <SplitterComponent height="100%" width="100%" ref={splitterInstanceRef}>
         <PanesDirective>
           <PaneDirective
             size={"15%"}

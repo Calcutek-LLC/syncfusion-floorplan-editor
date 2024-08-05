@@ -16,7 +16,7 @@ import {
 } from "@syncfusion/ej2-react-diagrams";
 import DiagramToolbar from "./diagram-toolbar";
 import { getAssemblyData } from "../diagram-data";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { getTool, handles } from "./user-handles";
 import "./diagram-component-wrapper.css";
 import { AssemblyData } from "./types";
@@ -24,7 +24,6 @@ import { AssemblyData } from "./types";
 let diagramInstance: DiagramComponent;
 
 const assemblyNodeTemplate = (props) => {
-  console.log(props);
   const assemblyData = props.data as AssemblyData;
   const border = `${assemblyData.borderColor} ${assemblyData.borderWidth}px ${assemblyData.borderStyle}`;
   return (
@@ -79,11 +78,13 @@ const getNewAssemblyNodeInstance = (id: string): any => {
 type DiagramComponentWrapperProps = {
   loadDiagram: () => void;
   saveDiagram: () => void;
+  handleDiagramSelectedItemsChanged: (data: any) => void;
 };
 
 const DiagramComponentWrapper = forwardRef(
   (props: DiagramComponentWrapperProps, ref) => {
     const diagramInstanceRef = useRef(null);
+    const [selectedItemProperties, setSelectedItemProperties] = useState(null);
     // React.useEffect(() => {
     //   diagramInstance.fitToPage();
     // }, []);
@@ -103,7 +104,42 @@ const DiagramComponentWrapper = forwardRef(
         diagramInstance.add(node);
         diagramInstance.dataBind();
       },
+
+      onNodePropertyUpdated(updatedData) {
+        console.log("onNodePropertyUpdated");
+        console.log(updatedData);
+      },
     }));
+
+    const handleSelectionChange = (args: ISelectionChangeEventArgs) => {
+      if (args.state === "Changed") {
+        const selectedItems = args.newValue as any;
+        const selectItemProperties = [];
+        if (selectedItems.length > 0) {
+          selectedItems.forEach((item) => {
+            const itemProperty = {
+              nodeId: item.properties["id"],
+              width: item.properties["width"],
+              height: item.properties["height"],
+              data: item.data,
+            };
+            selectItemProperties.push(itemProperty);
+          });
+
+          setSelectedItemProperties(selectItemProperties);
+          props.handleDiagramSelectedItemsChanged(selectItemProperties);
+          // diagramInstance.nodes.find((node) => {
+          //   if (node.id === selectItemProperties[0].nodeId) {
+          //     console.log("found");
+          //     // node.width = selectItemProperties[0].width - 10;
+          //     // console.log(node);
+          //   }
+          // });
+        } else {
+          setSelectedItemProperties([]);
+        }
+      }
+    };
 
     return (
       <Grid>
@@ -175,38 +211,7 @@ const DiagramComponentWrapper = forwardRef(
               SelectorConstraints.UserHandle,
             userHandles: handles,
           }}
-          selectionChange={(args: ISelectionChangeEventArgs) => {
-            if (args.state == "Changed") {
-              // console.log(args);
-              const selectedItems = args.newValue as any;
-              const selectItemProperties = [];
-              if (selectedItems.length > 0) {
-                // const node = selectedItems[0];
-                // console.log(node.properties);
-                selectedItems.forEach((item) => {
-                  // console.log(item);
-                  const itemProperty = {
-                    nodeId: item.properties["id"],
-                    width: item.properties["width"],
-                    height: item.properties["height"],
-                    data: item.data,
-                  };
-                  // console.log(itemProperty);
-                  selectItemProperties.push(itemProperty);
-                });
-
-                // diagramInstance.nodes.find((node) => {
-                //   if (node.id === selectItemProperties[0].nodeId) {
-                //     console.log("found");
-                //     // node.width = selectItemProperties[0].width - 10;
-                //     // console.log(node);
-                //   }
-                // });
-
-                console.log(selectItemProperties);
-              }
-            }
-          }}
+          selectionChange={handleSelectionChange}
           //set CustomTool
           getCustomTool={(action: string): ToolBase =>
             getTool(diagramInstance, action)

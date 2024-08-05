@@ -19,6 +19,7 @@
     "@mui/x-tree-view": "^7.11.1",
     "@react-spring/web": "^9.7.4",
     "@syncfusion/ej2-react-diagrams": "^26.2.5",
+    "@syncfusion/ej2-react-grids": "^26.2.7",
     "@syncfusion/ej2-react-layouts": "^26.2.5",
     "@syncfusion/ej2-react-navigations": "^26.2.7",
     "@tanstack/react-query": "^5.51.15",
