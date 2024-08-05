@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid } from '@mui/material';
 import {
   ConnectorModel,
   Diagram,
@@ -13,22 +13,43 @@ import {
   Snapping,
   ToolBase,
   UndoRedo,
-} from "@syncfusion/ej2-react-diagrams";
-import DiagramToolbar from "./diagram-toolbar";
-import { getAssemblyData } from "../diagram-data";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
-import { getTool, handles } from "./user-handles";
-import "./diagram-component-wrapper.css";
-import { AssemblyData } from "./types";
+} from '@syncfusion/ej2-react-diagrams';
+import DiagramToolbar from './diagram-toolbar';
+import { getAssemblyData } from '../diagram-data';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { getTool, handles } from './user-handles';
+import './diagram-component-wrapper.css';
+import { AssemblyData } from './types';
 
 let diagramInstance: DiagramComponent;
 
 const assemblyNodeTemplate = (props) => {
   const assemblyData = props.data as AssemblyData;
   const border = `${assemblyData.borderColor} ${assemblyData.borderWidth}px ${assemblyData.borderStyle}`;
+
   return (
     <div
-      style={{ border: border, backgroundColor: assemblyData.fillColor }}
+      style={{
+        border: border,
+        ...(assemblyData.fillStyle === 'solid' && {
+          backgroundColor: assemblyData.fillColor ?? 'transparent',
+        }),
+        ...(assemblyData.fillStyle === 'horizontal-lines' && {
+          backgroundImage: `linear-gradient(to bottom, ${assemblyData.fillColor} 1px, transparent 1px)`,
+          backgroundSize: '100% 10px',
+          backgroundRepeat: 'repeat-y',
+        }),
+        ...(assemblyData.fillStyle === 'vertical-lines' && {
+          backgroundImage: `linear-gradient(to right, ${assemblyData.fillColor} 1px, transparent 1px)`,
+          backgroundSize: '10px 100%',
+          backgroundRepeat: 'repeat-x',
+        }),
+        ...(assemblyData.fillStyle === 'dotted' && {
+          backgroundImage: `linear-gradient(to right top, red 2px, transparent 1px)`,
+          backgroundSize: '10px 10px',
+          backgroundRepeat: 'repeat',
+        }),
+      }}
       className="rectangle"
     ></div>
   );
@@ -38,9 +59,9 @@ const getNewAssemblyNodeInstance = (id: string): any => {
   const assemblyData = getAssemblyData(id);
   if (assemblyData === undefined) return null;
   const node = {
-    id: "node_" + randomId(),
+    id: 'node_' + randomId(),
     shape: {
-      type: "HTML",
+      type: 'HTML',
     },
     data: {
       ...assemblyData,
@@ -58,11 +79,11 @@ const getNewAssemblyNodeInstance = (id: string): any => {
       // fill: assemblyData.fillColor,
       // strokeColor: 'white',
       // strokeWidth: 1,
-      opacity: 0.6,
+      opacity: assemblyData.fillStyle === 'solid' ? 0.6 : 1,
     },
     annotations: [
       {
-        id: "label_" + randomId(),
+        id: 'label_' + randomId(),
         content: assemblyData.title,
         offset: {
           x: 0.5,
@@ -106,21 +127,21 @@ const DiagramComponentWrapper = forwardRef(
       },
 
       onNodePropertyUpdated(updatedData) {
-        console.log("onNodePropertyUpdated");
+        console.log('onNodePropertyUpdated');
         console.log(updatedData);
       },
     }));
 
     const handleSelectionChange = (args: ISelectionChangeEventArgs) => {
-      if (args.state === "Changed") {
+      if (args.state === 'Changed') {
         const selectedItems = args.newValue as any;
         const selectItemProperties = [];
         if (selectedItems.length > 0) {
           selectedItems.forEach((item) => {
             const itemProperty = {
-              nodeId: item.properties["id"],
-              width: item.properties["width"],
-              height: item.properties["height"],
+              nodeId: item.properties['id'],
+              width: item.properties['width'],
+              height: item.properties['height'],
               data: item.data,
             };
             selectItemProperties.push(itemProperty);
@@ -155,25 +176,25 @@ const DiagramComponentWrapper = forwardRef(
             diagramInstanceRef.current = diagram;
           }}
           nodeTemplate={assemblyNodeTemplate}
-          width={"100%"}
-          height={"750px"}
+          width={'100%'}
+          height={'750px'}
           rulerSettings={{
             showRulers: true,
             horizontalRuler: {
               interval: 10,
               segmentWidth: 100,
               thickness: 35,
-              tickAlignment: "LeftOrTop",
+              tickAlignment: 'LeftOrTop',
             },
             verticalRuler: {
               interval: 10,
               segmentWidth: 100,
               thickness: 35,
-              tickAlignment: "RightOrBottom",
+              tickAlignment: 'RightOrBottom',
             },
           }}
           pageSettings={{
-            orientation: "Landscape",
+            orientation: 'Landscape',
             // Sets the Multiple page for diagram
             multiplePage: true,
             // Sets the Page Break for diagram
@@ -188,7 +209,7 @@ const DiagramComponentWrapper = forwardRef(
           }}
           scrollSettings={{
             //Sets the scroll limit
-            scrollLimit: "Diagram",
+            scrollLimit: 'Diagram',
           }}
           contextMenuSettings={{
             show: true,
