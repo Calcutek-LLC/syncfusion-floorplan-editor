@@ -1,10 +1,11 @@
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 import {
   ConnectorModel,
   Diagram,
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  ISelectionChangeEventArgs,
   NodeModel,
   randomId,
   SelectorConstraints,
@@ -12,13 +13,13 @@ import {
   Snapping,
   ToolBase,
   UndoRedo,
-} from '@syncfusion/ej2-react-diagrams';
-import DiagramToolbar from './diagram-toolbar';
-import { getAssemblyData } from '../diagram-data';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { getTool, handles } from './user-handles';
-import './diagram-component-wrapper.css';
-import { AssemblyData } from './types';
+} from "@syncfusion/ej2-react-diagrams";
+import DiagramToolbar from "./diagram-toolbar";
+import { getAssemblyData } from "../diagram-data";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import { getTool, handles } from "./user-handles";
+import "./diagram-component-wrapper.css";
+import { AssemblyData } from "./types";
 
 let diagramInstance: DiagramComponent;
 
@@ -38,9 +39,9 @@ const getNewAssemblyNodeInstance = (id: string): any => {
   const assemblyData = getAssemblyData(id);
   if (assemblyData === undefined) return null;
   const node = {
-    id: 'node_' + randomId(),
+    id: "node_" + randomId(),
     shape: {
-      type: 'HTML',
+      type: "HTML",
     },
     data: {
       ...assemblyData,
@@ -62,7 +63,7 @@ const getNewAssemblyNodeInstance = (id: string): any => {
     },
     annotations: [
       {
-        id: 'label_' + randomId(),
+        id: "label_" + randomId(),
         content: assemblyData.title,
         offset: {
           x: 0.5,
@@ -118,26 +119,26 @@ const DiagramComponentWrapper = forwardRef(
             diagramInstanceRef.current = diagram;
           }}
           nodeTemplate={assemblyNodeTemplate}
-          width={'100%'}
-          height={'750px'}
+          width={"100%"}
+          height={"750px"}
           rulerSettings={{
             showRulers: true,
             horizontalRuler: {
               interval: 10,
               segmentWidth: 100,
               thickness: 35,
-              tickAlignment: 'LeftOrTop',
+              tickAlignment: "LeftOrTop",
             },
             verticalRuler: {
               interval: 10,
               segmentWidth: 100,
               thickness: 35,
-              tickAlignment: 'RightOrBottom',
+              tickAlignment: "RightOrBottom",
             },
           }}
           scrollSettings={{
             //Sets the scroll limit
-            scrollLimit: 'Diagram',
+            scrollLimit: "Diagram",
           }}
           contextMenuSettings={{
             show: true,
@@ -159,6 +160,38 @@ const DiagramComponentWrapper = forwardRef(
               SelectorConstraints.ResizeAll |
               SelectorConstraints.UserHandle,
             userHandles: handles,
+          }}
+          selectionChange={(args: ISelectionChangeEventArgs) => {
+            if (args.state == "Changed") {
+              // console.log(args);
+              const selectedItems = args.newValue as any;
+              const selectItemProperties = [];
+              if (selectedItems.length > 0) {
+                // const node = selectedItems[0];
+                // console.log(node.properties);
+                selectedItems.forEach((item) => {
+                  // console.log(item);
+                  const itemProperty = {
+                    nodeId: item.properties["id"],
+                    width: item.properties["width"],
+                    height: item.properties["height"],
+                    data: item.data,
+                  };
+                  // console.log(itemProperty);
+                  selectItemProperties.push(itemProperty);
+                });
+
+                // diagramInstance.nodes.find((node) => {
+                //   if (node.id === selectItemProperties[0].nodeId) {
+                //     console.log("found");
+                //     // node.width = selectItemProperties[0].width - 10;
+                //     // console.log(node);
+                //   }
+                // });
+
+                console.log(selectItemProperties);
+              }
+            }
           }}
           //set CustomTool
           getCustomTool={(action: string): ToolBase =>
