@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import { DiagramTestData, getAllAssemblies } from '../components/diagram-data';
+import { DiagramTestData, getAllAssemblies } from '../diagram-data';
 import { useRef } from 'react';
 import AssemblyLibraryV2 from '../components/assembly-library-v2';
 import {
@@ -54,7 +54,7 @@ const ProjectDrawing = () => {
     <Grid
       container
       sx={{
-        mt: 10,
+        // mt: 10,
         height: '100vh',
         width: '100vw',
       }}
@@ -62,14 +62,19 @@ const ProjectDrawing = () => {
       <SplitterComponent height="100%" width="100%" ref={splitterInstance}>
         <PanesDirective>
           <PaneDirective
-            size={'20%'}
-            min={'15%'}
+            size={'15%'}
+            min={'10%'}
             content={assemblyLibraryElement.bind(this)}
           />
           <PaneDirective
-            size={'80%'}
+            size={'70%'}
             min={'50%'}
             content={diagramElement.bind(this)}
+          />
+          <PaneDirective
+            size={'15%'}
+            min={'10%'}
+            content={assemblyLibraryElement.bind(this)}
           />
         </PanesDirective>
       </SplitterComponent>

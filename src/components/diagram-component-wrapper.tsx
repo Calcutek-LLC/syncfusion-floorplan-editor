@@ -135,9 +135,23 @@ const DiagramComponentWrapper = forwardRef(
               tickAlignment: 'RightOrBottom',
             },
           }}
+          pageSettings={{
+            orientation: 'Landscape',
+            // Sets the Multiple page for diagram
+            multiplePage: true,
+            // Sets the Page Break for diagram
+            showPageBreaks: true,
+            width: 595,
+            height: 842,
+            margin: {
+              // left: 10,
+              // top: 10,
+              // bottom: 10,
+            },
+          }}
           scrollSettings={{
             //Sets the scroll limit
-            scrollLimit: 'Diagram',
+            scrollLimit: 'Limited',
           }}
           contextMenuSettings={{
             show: true,
