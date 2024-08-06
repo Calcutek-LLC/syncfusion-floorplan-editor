@@ -24,7 +24,7 @@ import { AssemblyData } from './types';
 let diagramInstance: DiagramComponent;
 
 const assemblyNodeTemplate = (props) => {
-  const assemblyData = props.data as AssemblyData;
+  const assemblyData = props.addInfo as AssemblyData;
   const border = `${assemblyData.borderColor} ${assemblyData.borderWidth}px ${assemblyData.borderStyle}`;
 
   return (
@@ -63,7 +63,7 @@ const getNewAssemblyNodeInstance = (id: string): any => {
     shape: {
       type: 'HTML',
     },
-    data: {
+    addInfo: {
       ...assemblyData,
     },
     content: assemblyData.title,
@@ -224,7 +224,6 @@ const DiagramComponentWrapper = forwardRef(
               SnapConstraints.SnapToLines |
               SnapConstraints.ShowLines,
           }}
-          addInfo={true}
           selectedItems={{
             constraints:
               SelectorConstraints.ToolTip |

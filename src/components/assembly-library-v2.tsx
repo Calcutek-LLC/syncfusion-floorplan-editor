@@ -38,6 +38,7 @@ const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
       allowDragAndDrop={true}
       onClick={addNode}
       keyPress={keyPress}
+      cssClass="custom"
     />
   );
 };

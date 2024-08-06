@@ -12,12 +12,17 @@
   stroke-dasharray: 1, 1;
 }
 
-#treeview.e-treeview .e-list-icon {
-  background-repeat: no-repeat;
-  background-image: url(src/images/icons/file_icons.png);
-  height: 20px;
+/* icons https://ej2.syncfusion.com/react/documentation/appearance/icons#material */
+.custom.e-treeview .e-list-item .e-icon-expandable::before {
+  font-size: 16px;
+  content: '\ec04' !important;
 }
 
-#treeview.e-treeview .e-list-icon.folder {
-  background-position: -10px -552px;
+.custom.e-treeview .e-list-item .e-icon-collapsible::before {
+  content: '\e65f' !important;
+  font-size: 16px;
+}
+
+.e-treeview .e-list-item .e-icons.e-icon-collapsible {
+  transform: none;
 }
