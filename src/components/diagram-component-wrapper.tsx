@@ -22,6 +22,8 @@ import './diagram-component-wrapper.css';
 import { AssemblyData } from './types';
 
 let diagramInstance: DiagramComponent;
+let startBounds;
+let oldValues = [];
 
 const assemblyNodeTemplate = (props) => {
   const assemblyData = props.addInfo as AssemblyData;
@@ -70,7 +72,7 @@ const getNewAssemblyNodeInstance = (id: string): any => {
     width: assemblyData.width ?? 50,
     height: assemblyData.height ?? 50,
     offsetX: 100,
-    offsetY: 10,
+    offsetY: 100,
     minWidth: assemblyData.minWidth ?? 50,
     maxWidth: assemblyData.maxWidth ?? 200,
     minHeight: assemblyData.maxHeight ?? 50,
@@ -131,6 +133,15 @@ const DiagramComponentWrapper = forwardRef(
         console.log(updatedData);
       },
     }));
+
+    const intersectRect = (r1, r2) => {
+      return !(
+        r2.left >= r1.right + 50 ||
+        r2.right <= r1.left - 50 ||
+        r2.top >= r1.bottom + 50 ||
+        r2.bottom <= r1.top - 50
+      );
+    };
 
     const handleSelectionChange = (args: ISelectionChangeEventArgs) => {
       if (args.state === 'Changed') {
@@ -298,6 +309,43 @@ const DiagramComponentWrapper = forwardRef(
             diagram: Diagram
           ) => {
             return connector;
+          }}
+          positionChange={(args) => {
+            let bounds;
+            if (args.state === 'Start') {
+              oldValues = [];
+              startBounds = args.source.wrapper.bounds;
+              oldValues.push(args.oldValue);
+              console.log(oldValues);
+            }
+            if (args.state === 'Completed') {
+              const selectedObjBounds = args.source.wrapper.bounds;
+              bounds = {
+                left: selectedObjBounds.left,
+                right: selectedObjBounds.right,
+                bottom: selectedObjBounds.bottom,
+                top: selectedObjBounds.top,
+              };
+              for (let i = 0; i < diagramInstance.nodes.length; i++) {
+                if (
+                  diagramInstance.nodes[i].id !==
+                    diagramInstance.selectedItems.nodes[0].id &&
+                  intersectRect(diagramInstance.nodes[i].wrapper.bounds, bounds)
+                ) {
+                  if (args.source instanceof Node) {
+                    args.source.offsetX = oldValues[0].offsetX;
+                    args.source.offsetY = oldValues[0].offsetY;
+                    diagramInstance.dataBind();
+                  } else {
+                    args.source.nodes[0].offsetX = oldValues[0].offsetX;
+                    args.source.nodes[0].offsetY = oldValues[0].offsetY;
+                    diagramInstance.dataBind();
+                  }
+                } else {
+                  oldValues.push(args.oldValue);
+                }
+              }
+            }
           }}
           // setNodeTemplate={(obj: Node, diagram: Diagram): Container => {
           //   //customization of the node.
