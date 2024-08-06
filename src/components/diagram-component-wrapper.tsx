@@ -22,8 +22,8 @@ import './diagram-component-wrapper.css';
 import { AssemblyData } from './types';
 
 let diagramInstance: DiagramComponent;
-let startBounds;
-let oldValues = [];
+// let startBounds;
+// let oldValues = [];
 
 const assemblyNodeTemplate = (props) => {
   const assemblyData = props.addInfo as AssemblyData;
@@ -69,14 +69,14 @@ const getNewAssemblyNodeInstance = (id: string): any => {
       ...assemblyData,
     },
     content: assemblyData.title,
-    width: assemblyData.width ?? 50,
-    height: assemblyData.height ?? 50,
+    width: assemblyData.width ?? 10,
+    height: assemblyData.height ?? 10,
     offsetX: 100,
     offsetY: 100,
-    minWidth: assemblyData.minWidth ?? 50,
-    maxWidth: assemblyData.maxWidth ?? 200,
-    minHeight: assemblyData.maxHeight ?? 50,
-    maxHeight: assemblyData.maxHeight ?? 200,
+    minWidth: assemblyData.minWidth ?? 10,
+    maxWidth: assemblyData.maxWidth ?? 50,
+    minHeight: assemblyData.minHeight ?? 10,
+    maxHeight: assemblyData.maxHeight ?? 50,
     style: {
       // fill: assemblyData.fillColor,
       // strokeColor: 'white',
@@ -134,14 +134,14 @@ const DiagramComponentWrapper = forwardRef(
       },
     }));
 
-    const intersectRect = (r1, r2) => {
-      return !(
-        r2.left >= r1.right + 50 ||
-        r2.right <= r1.left - 50 ||
-        r2.top >= r1.bottom + 50 ||
-        r2.bottom <= r1.top - 50
-      );
-    };
+    // const intersectRect = (r1, r2) => {
+    //   return !(
+    //     r2.left >= r1.right + 50 ||
+    //     r2.right <= r1.left - 50 ||
+    //     r2.top >= r1.bottom + 50 ||
+    //     r2.bottom <= r1.top - 50
+    //   );
+    // };
 
     const handleSelectionChange = (args: ISelectionChangeEventArgs) => {
       if (args.state === 'Changed') {
@@ -206,6 +206,7 @@ const DiagramComponentWrapper = forwardRef(
           }}
           pageSettings={{
             orientation: 'Landscape',
+            boundaryConstraints: 'Diagram',
             // Sets the Multiple page for diagram
             multiplePage: true,
             // Sets the Page Break for diagram
@@ -221,6 +222,7 @@ const DiagramComponentWrapper = forwardRef(
           scrollSettings={{
             //Sets the scroll limit
             scrollLimit: 'Diagram',
+            minZoom: 1,
           }}
           contextMenuSettings={{
             show: true,
@@ -238,6 +240,7 @@ const DiagramComponentWrapper = forwardRef(
           selectedItems={{
             constraints:
               SelectorConstraints.ToolTip |
+              SelectorConstraints.Rotate |
               SelectorConstraints.ResizeAll |
               SelectorConstraints.UserHandle,
             userHandles: handles,
@@ -311,41 +314,41 @@ const DiagramComponentWrapper = forwardRef(
             return connector;
           }}
           positionChange={(args) => {
-            let bounds;
-            if (args.state === 'Start') {
-              oldValues = [];
-              startBounds = args.source.wrapper.bounds;
-              oldValues.push(args.oldValue);
-              console.log(oldValues);
-            }
-            if (args.state === 'Completed') {
-              const selectedObjBounds = args.source.wrapper.bounds;
-              bounds = {
-                left: selectedObjBounds.left,
-                right: selectedObjBounds.right,
-                bottom: selectedObjBounds.bottom,
-                top: selectedObjBounds.top,
-              };
-              for (let i = 0; i < diagramInstance.nodes.length; i++) {
-                if (
-                  diagramInstance.nodes[i].id !==
-                    diagramInstance.selectedItems.nodes[0].id &&
-                  intersectRect(diagramInstance.nodes[i].wrapper.bounds, bounds)
-                ) {
-                  if (args.source instanceof Node) {
-                    args.source.offsetX = oldValues[0].offsetX;
-                    args.source.offsetY = oldValues[0].offsetY;
-                    diagramInstance.dataBind();
-                  } else {
-                    args.source.nodes[0].offsetX = oldValues[0].offsetX;
-                    args.source.nodes[0].offsetY = oldValues[0].offsetY;
-                    diagramInstance.dataBind();
-                  }
-                } else {
-                  oldValues.push(args.oldValue);
-                }
-              }
-            }
+            // let bounds;
+            // if (args.state === 'Start') {
+            //   oldValues = [];
+            //   startBounds = args.source.wrapper.bounds;
+            //   oldValues.push(args.oldValue);
+            //   console.log(oldValues);
+            // }
+            // if (args.state === 'Completed') {
+            //   const selectedObjBounds = args.source.wrapper.bounds;
+            //   bounds = {
+            //     left: selectedObjBounds.left,
+            //     right: selectedObjBounds.right,
+            //     bottom: selectedObjBounds.bottom,
+            //     top: selectedObjBounds.top,
+            //   };
+            //   for (let i = 0; i < diagramInstance.nodes.length; i++) {
+            //     if (
+            //       diagramInstance.nodes[i].id !==
+            //         diagramInstance.selectedItems.nodes[0].id &&
+            //       intersectRect(diagramInstance.nodes[i].wrapper.bounds, bounds)
+            //     ) {
+            //       if (args.source instanceof Node) {
+            //         args.source.offsetX = oldValues[0].offsetX;
+            //         args.source.offsetY = oldValues[0].offsetY;
+            //         diagramInstance.dataBind();
+            //       } else {
+            //         args.source.nodes[0].offsetX = oldValues[0].offsetX;
+            //         args.source.nodes[0].offsetY = oldValues[0].offsetY;
+            //         diagramInstance.dataBind();
+            //       }
+            //     } else {
+            //       oldValues.push(args.oldValue);
+            //     }
+            //   }
+            // }
           }}
           // setNodeTemplate={(obj: Node, diagram: Diagram): Container => {
           //   //customization of the node.
