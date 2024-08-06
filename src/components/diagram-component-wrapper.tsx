@@ -73,10 +73,10 @@ const getNewAssemblyNodeInstance = (id: string): any => {
     height: assemblyData.height ?? 10,
     offsetX: 100,
     offsetY: 100,
-    minWidth: assemblyData.minWidth ?? 10,
-    maxWidth: assemblyData.maxWidth ?? 50,
-    minHeight: assemblyData.minHeight ?? 10,
-    maxHeight: assemblyData.maxHeight ?? 50,
+    minWidth: assemblyData.minWidth ?? 100,
+    maxWidth: assemblyData.maxWidth ?? 1000,
+    minHeight: assemblyData.minHeight ?? 100,
+    maxHeight: assemblyData.maxHeight ?? 1000,
     style: {
       // fill: assemblyData.fillColor,
       // strokeColor: 'white',
@@ -222,7 +222,7 @@ const DiagramComponentWrapper = forwardRef(
           scrollSettings={{
             //Sets the scroll limit
             scrollLimit: 'Diagram',
-            minZoom: 1,
+            minZoom: 0.5,
           }}
           contextMenuSettings={{
             show: true,

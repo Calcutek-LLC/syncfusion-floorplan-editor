@@ -6,10 +6,12 @@
 }
 
 .e-diagram-resize-handle {
-  stroke: black;
-  stroke-width: 1px;
+  stroke: blue;
+  stroke-width: 1opx;
   stroke-dasharray: none;
   fill: white;
+  rx: 0;
+  ry: 0;
 }
 /* 
 .e-diagram-selected-region {
