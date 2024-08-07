@@ -115,6 +115,7 @@ const DiagramComponentWrapper = forwardRef(
     useImperativeHandle(ref, () => ({
       loadDiagramEx(data) {
         diagramInstance.loadDiagram(data);
+        diagramInstance.updateViewPort();
       },
 
       saveDiagramEx() {
