@@ -10,3 +10,16 @@
   stroke: red;
   stroke-dasharray: 1, 1;
 }
+.custom.e-treeview .e-list-item .e-icon-expandable::before {
+  font-size: 12px ;
+  content: '\ec04' !important;
+}
+
+.custom.e-treeview .e-list-item .e-icon-collapsible::before {
+  content: '\e65f' !important;
+  font-size: 12px;
+}
+
+.e-treeview .e-list-item .e-icons.e-icon-collapsible {
+  transform: none;
+}
