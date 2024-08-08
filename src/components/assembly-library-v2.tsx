@@ -1,5 +1,5 @@
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
-
+import './../App.css';
 let treeObj: TreeViewComponent;
 const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
   const fields = {
@@ -32,6 +32,7 @@ const AssemblyLibraryV2 = ({ diagramWrapperInstanceRef, treeData }) => {
       ref={(treeview) => {
         treeObj = treeview;
       }}
+      cssClass="custom"
       allowEditing={false}
       allowDragAndDrop={true}
       onClick={addNode}
